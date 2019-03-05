@@ -1,25 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Menu from './components/Menu/Menu';
+
+import './App.scss';
 
 class App extends Component {
+  state = {
+    isMenuOpen: false,
+  };
+
+  toggleMenuOpen = isMenuOpen => {
+    this.setState(prevState => ({
+      isMenuOpen: (typeof isMenuOpen === 'boolean') ? isMenuOpen : !prevState.isMenuOpen,
+    }));
+  };
+
   render() {
+    const {
+      isMenuOpen,
+    } = this.state;
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
+      <div className="app">
+        <div className="header">
+          <button
+            className="header__toggle-menu-btn"
+            onClick={this.toggleMenuOpen}
           >
-            Learn React
-          </a>
-        </header>
+            {isMenuOpen ? 'Close' : 'Open'}
+          </button>
+        </div>
+
+        <Menu isOpen={isMenuOpen} toggle={this.toggleMenuOpen}/>
       </div>
     );
   }
